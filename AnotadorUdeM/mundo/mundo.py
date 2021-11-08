@@ -14,40 +14,41 @@ class Nota:
 
 class Pagina:
     def __init__(self,titulo : str):
-        self.titulo : str = titulo
+        self._titulo : str = titulo
         self.fecha_creacion = date.today()
         self.notas = []
 
     @property
-    def _titulo(self):
-        return self.titulo
+    def titulo(self):
+        return self._titulo
 
-    @_titulo.setter
-    def _titulo(self, nuevo_titulo : str):
-        self.titulo = nuevo_titulo
+    @titulo.setter
+    def titulo(self, nuevo_titulo : str):
+        self._titulo = nuevo_titulo
 
     def buscar_nota(self,etiqueta : str):
         #TODO: Este metodo en teoria deberia buscar todas las notas con la misma etiqueta y retornarlas
         pass
 
-    def agregar_notas(self,contenido_nota : str, etiqueta_nota : str):
-        #TODO: Agrega una nueva nota sin verificar que otras notas contengan la misma etiqueta
-        pass
+    def agregar_notas_pagina(self,contenido_nota : str, etiqueta_nota : str):
+        nota = Nota(contenido_nota,etiqueta_nota)
+        self.notas.append(nota)
+
 
 
 class Seccion:
     def __init__(self, titulo : str):
-        self.titulo : str = titulo
+        self._titulo : str = titulo
         self.fecha_creacion = date.today()
         self.paginas = []
 
     @property
-    def _titulo(self):
+    def titulo(self):
         return self.titulo
 
-    @_titulo.setter
-    def _titulo(self, nuevo_titulo : str):
-        self.titulo = nuevo_titulo
+    @titulo.setter
+    def titulo(self, nuevo_titulo : str):
+        self._titulo = nuevo_titulo
 
     def buscar_pagina(self, titulo_pagina: str):
         """
@@ -87,7 +88,7 @@ class Seccion:
         """
         for pagina in self.paginas:
             if titulo == pagina.titulo:
-                pagina._titulo = nuevo_titulo
+                pagina.titulo = nuevo_titulo
                 break
 
     def borrar_pagina(self, titulo : str):
@@ -117,8 +118,7 @@ class Libro:
         for seccion in self.secciones:
             if titulo_seccion == seccion.titulo:
                 return seccion
-            else:
-                return None
+        return None
 
     def agregar_seccion(self, titulo_seccion: str):
         """
@@ -144,7 +144,7 @@ class Libro:
         """
         for seccion in self.secciones:
             if titulo == seccion.titulo:
-                seccion._titulo = nuevo_titulo
+                seccion.titulo = nuevo_titulo
                 break
 
     def borrar_seccion(self, titulo: str):
@@ -159,7 +159,11 @@ class Libro:
 class Anotador:
     def __init__(self):
         self.libros = []
+        self.notas = []
         self.notas_destacadas = []
+
+    def agregar_nota(self):
+        pass
 
     def buscar_libro(self, titulo_libro: str):
         """
@@ -171,8 +175,7 @@ class Anotador:
         for libro in self.libros:
             if titulo_libro == libro.titulo:
                 return libro
-            else:
-                return None
+        return None
 
     def agregar_libro(self,libro_titulo):
         """
