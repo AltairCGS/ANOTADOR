@@ -79,3 +79,15 @@ class PaginaNoExistenteError(AnotadorError):
     def __init__(self, titulo: str, msg: str):
         self.titulo: str = titulo
         self.msg: str = msg
+
+
+class NotaExistenteError(AnotadorError):
+    def __init__(self, etiqueta : str, msg: str):
+        self.etiqueta: str = etiqueta
+        self.msg: str = msg
+
+
+class NotaNoExistenteError(AnotadorError):
+    def __init__(self, etiqueta : str, msg: str):
+        self.etiqueta: str = etiqueta
+        self.msg: str = msg

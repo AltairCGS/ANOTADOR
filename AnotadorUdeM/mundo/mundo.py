@@ -68,6 +68,7 @@ class Pagina:
         self.notas.append(nota)
         #Anotador.agregar_notas(nota)
 
+
     def modificar_nota(self,contenido,nuevo_contenido):
         for nota in self.notas:
             if contenido == nota.contenido:
