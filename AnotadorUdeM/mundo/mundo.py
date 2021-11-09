@@ -5,11 +5,27 @@ from AnotadorUdeM.mundo.errores import LibroExistenteError, SeccionExistenteErro
 
 class Nota:
     def __init__(self, contenido : str, etiqueta : str):
-        self.contenido : str = contenido
+        self._contenido : str = contenido
         self.etiqueta : str = etiqueta
         self.fecha_creacion = date.today()
-        self.destacada : int = 0
+        self._destacada : int = 0
         #atributo que sirve para determinar si la nota es destacada o no (0 = no esta destacada, 1 = si es destacada), se manejara como propiedad para poder modificarla.
+
+    @property
+    def contenido(self):
+        return self._contenido
+
+    @contenido.setter
+    def contenido(self, nuevo_contenido : str):
+        self._contenido = nuevo_contenido
+
+    @property
+    def destacada(self):
+        return self._destacada
+
+    @destacada.setter
+    def destacada(self, actulizar):
+        self._contenido = actulizar
 
 
 class Pagina:
@@ -27,13 +43,46 @@ class Pagina:
         self._titulo = nuevo_titulo
 
     def buscar_nota(self,etiqueta : str):
-        #TODO: Este metodo en teoria deberia buscar todas las notas con la misma etiqueta y retornarlas
-        pass
+        notas_encontradas = []
+        for nota in self.notas:
+            if etiqueta == nota.etiqueta:
+                notas_encontradas.append(nota)
+        return notas_encontradas
+
+    def buscar_notas_fecha(self,fecha):
+        notas_encontradas_fecha = []
+        for nota in self.notas:
+            if fecha == nota.fecha_creacion:
+                notas_encontradas_fecha.append(nota)
+        return notas_encontradas_fecha
+
+    def mostrar_destacadas(self):
+        notas_destacadas = []
+        for nota in self.notas:
+            if nota.destacada == 1:
+                notas_destacadas.append(nota)
+        return notas_destacadas
 
     def agregar_notas_pagina(self,contenido_nota : str, etiqueta_nota : str):
         nota = Nota(contenido_nota,etiqueta_nota)
         self.notas.append(nota)
+        #Anotador.agregar_notas(nota)
 
+    def modificar_nota(self,contenido,nuevo_contenido):
+        for nota in self.notas:
+            if contenido == nota.contenido:
+                nota.contenido = nuevo_contenido
+                break
+
+    def borra_nota(self,etiqueta):
+        for nota in self.notas:
+            if etiqueta == nota.etiqueta:
+                self.notas.remove(nota)
+
+    def marcar_nota_destacada(self,etiqueta):
+        for nota in self.notas:
+            if etiqueta == nota.etiqueta:
+                nota.destacada = 1
 
 
 class Seccion:
@@ -162,8 +211,15 @@ class Anotador:
         self.notas = []
         self.notas_destacadas = []
 
-    def agregar_nota(self):
-        pass
+    def agregar_notas(self,nota):
+        self.notas.append(nota)
+
+    def ver_notas(self,etiqueta):
+        notas_encontradas = []
+        for nota in self.notas:
+            if etiqueta == nota.etiqueta:
+                notas_encontradas.append(nota)
+        return notas_encontradas
 
     def buscar_libro(self, titulo_libro: str):
         """
